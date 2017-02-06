@@ -131,8 +131,16 @@ public class PlayerAttack : MonoBehaviour
 			enemies.Remove(deadEnemy);
 		}
 		deadEnemies.Clear();
+		
+		UpdateNextAttack();
+	}
 
-		//Establish the next time the player can attack.
+	/*
+	 * Establishes when the player can attack again and allows the player to attack again.
+	 * 
+	 */
+	void UpdateNextAttack()
+	{
 		nextAttackTime = Time.time + attackDelay;
 		canAttack = true;
 	}
