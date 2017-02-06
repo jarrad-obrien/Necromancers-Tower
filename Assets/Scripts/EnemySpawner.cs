@@ -23,7 +23,11 @@ public class EnemySpawner : MonoBehaviour {
 	[SerializeField]
 	private float timeBetweenSpawns = 2f;
 
-	//public bool startSpawn;
+	//How long to spawn the enemies for.
+	[SerializeField]
+	private float roundDuration;
+
+	private bool canSpawn = false;
 
 	EnemyCache cache;
 
@@ -39,9 +43,25 @@ public class EnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		CheckIfCanSpawn();
 	}
 
+	/*
+	 * Checks if the spawner is able to spawn.
+	 * 
+	 */
+	void CheckIfCanSpawn()
+	{
+		if(Time.time > nextSpawnTime && canSpawn)
+		{
+			SpawnEnemy();
+		}
+	}
+
+	/*
+	 * Grabs an enemy from the cache, resets its health and position and sets it to active.
+	 * 
+	 */
 	void SpawnEnemy()
 	{
 		GameObject enemy = cache.getEnemy();
@@ -65,13 +85,26 @@ public class EnemySpawner : MonoBehaviour {
 
 		//Sets the enemy active so it will approach the target.
 		enemy.SetActive(true);
+
+		UpdateNextSpawn();
 	}
 
+	/*
+	 * Establishes when the spawner can spawn another enemy.
+	 * 
+	 */
+	void UpdateNextSpawn()
+	{
+		nextSpawnTime = Time.time + timeBetweenSpawns;
+	}
+	
+	/*
+	 * Marks the spawner as being allowed to begin spawning. This occurs after the cache
+	 * has been loaded.
+	 * 
+	 */
 	public void BeginSpawning()
 	{
-		for(int i = 0; i < 10; i++)
-		{
-			SpawnEnemy();
-		}
+		canSpawn = true;
 	}
 }
