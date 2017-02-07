@@ -27,8 +27,10 @@ public class EnemySpawner : MonoBehaviour {
 	[SerializeField]
 	private float roundDuration;
 
+	//Marks whether or not the spawner can begin spawning.
 	private bool canSpawn = false;
 
+	//Where the enemies are cached and obtained from.
 	EnemyCache cache;
 
 	void Awake()

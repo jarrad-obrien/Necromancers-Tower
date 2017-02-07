@@ -61,7 +61,7 @@ public class EnemyFollow : MonoBehaviour {
 			}
 			else
 			{
-				enemyAttackInstance.setCanAttack();
+				enemyAttackInstance.SetCanAttack();
 			}
 		}
 	}
@@ -70,7 +70,7 @@ public class EnemyFollow : MonoBehaviour {
 	 * Returns the target to be followed.
 	 * 
 	 */
-	public GameObject getTarget()
+	public GameObject GetTarget()
 	{
 		return target;
 	}

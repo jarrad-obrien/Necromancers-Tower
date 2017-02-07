@@ -52,7 +52,7 @@ public class Cache : MonoBehaviour {
 	 * Gets a cached object and moves the counter so that it's ready to get the next cached object.
 	 * 
 	 */
-	public GameObject getObject()
+	public GameObject GetCachedObject()
 	{
 		currentObject++;
 

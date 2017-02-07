@@ -37,23 +37,23 @@ public class EnemyAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		getTargetHealth();
+		GetTargetHealth();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		checkIfCanAttack();
+		CheckIfCanAttack();
 	}
 
 	/*
-	 * Gets the reference to the health bar. Using getTarget() isn't totally necessary, 
+	 * Gets the reference to the health bar. Using GetTarget() isn't totally necessary, 
 	 * but it's been done to save Find() calls.
 	 * 
 	 */
-	void getTargetHealth()
+	void GetTargetHealth()
 	{
-		GameObject target = GetComponent<EnemyFollow>().getTarget();
+		GameObject target = GetComponent<EnemyFollow>().GetTarget();
 
 		for (int i = 0; i < target.transform.childCount; i++)
 		{
@@ -66,18 +66,15 @@ public class EnemyAttack : MonoBehaviour {
 	}
 
 	/*
-	 * Checks the unit is able to attack.
+	 * Checks if the unit is able to attack.
 	 * 
 	 */
-	void checkIfCanAttack()
+	void CheckIfCanAttack()
 	{
-		if (atTower && canAttack)
+		if (atTower && canAttack && Time.time > nextAttackTime)
 		{
-			if (Time.time > nextAttackTime)
-			{
-				canAttack = false;
-				StartCoroutine(ExecuteAfterTime(attackAnimDuration));
-			}
+			canAttack = false;
+			StartCoroutine(ExecuteAfterTime(attackAnimDuration));
 		}
 	}
 
@@ -109,7 +106,7 @@ public class EnemyAttack : MonoBehaviour {
 	 * start attacking.
 	 * 
 	 */
-	public void setCanAttack()
+	public void SetCanAttack()
 	{
 		atTower = true;
 	}
