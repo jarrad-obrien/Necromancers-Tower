@@ -14,7 +14,7 @@ public class EnemyCache : MonoBehaviour {
 	private GameObject[] enemyArray;
 
 	//The number of enemies to be instantiated. There should never be more than this number of 
-	//enemies active at one time.
+	//enemies active at any one time.
 	[SerializeField]
 	private int maxNumberOfEnemies;
 

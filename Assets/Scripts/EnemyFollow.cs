@@ -25,8 +25,12 @@ public class EnemyFollow : MonoBehaviour {
 
 	void Awake()
 	{
+		//HARDCODED
 		target = GameObject.Find("TowerContainer");
+
+		//HARDCODED
 		realTarget = GameObject.Find("LowerTarget");
+
 		enemyAttackInstance = this.GetComponent<EnemyAttack>();
 	}
 
