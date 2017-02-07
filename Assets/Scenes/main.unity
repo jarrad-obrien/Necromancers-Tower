@@ -193,6 +193,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &456168392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 456168393}
+  - 114: {fileID: 456168395}
+  - 114: {fileID: 456168394}
+  m_Layer: 0
+  m_Name: ProjectileShooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &456168393
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 456168392}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1891577966}
+  m_RootOrder: 3
+--- !u!114 &456168394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 456168392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bab1e8ea1e45ed4080aa7928c251ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDelay: 1
+--- !u!114 &456168395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 456168392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8800728ddc18d43a36c1fc49b6d2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefab: {fileID: 1000012318877432, guid: c423273a0574fef419e0d9f419f58efc,
+    type: 2}
+  maxNumberOfObjects: 10
 --- !u!1 &608506912
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1000014169849738, guid: ad97a5a2407956949bfca02de50548df,
     type: 2}
-  maxNumberOfEnemies: 100
+  maxNumberOfEnemies: 20
 --- !u!4 &819759934
 Transform:
   m_ObjectHideFlags: 0
@@ -735,5 +791,6 @@ Transform:
   - {fileID: 608506914}
   - {fileID: 1808953350}
   - {fileID: 904721440}
+  - {fileID: 456168393}
   m_Father: {fileID: 0}
   m_RootOrder: 4

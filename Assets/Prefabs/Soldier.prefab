@@ -88,6 +88,7 @@ GameObject:
   - 114: {fileID: 114000014001774262}
   - 114: {fileID: 114000011138483004}
   - 114: {fileID: 114000013909114814}
+  - 50: {fileID: 50000011753129484}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Enemy
@@ -164,6 +165,23 @@ Transform:
   - {fileID: 4000010870238096}
   m_Father: {fileID: 4000010071526706}
   m_RootOrder: 0
+--- !u!50 &50000011753129484
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014169849738}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61000012977892100
 BoxCollider2D:
   m_ObjectHideFlags: 1

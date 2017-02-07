@@ -58,7 +58,7 @@ public class Health : MonoBehaviour
 			//the green health bar is effectively removed.
 			if (totalDamageTaken >= health)
 			{
-				healthBarGreen.transform.localScale = new Vector3(0, 0, 0);
+				healthBarGreen.transform.localScale = new Vector3(0, healthBarGreen.transform.localScale.y, 0);
 				isDead = true;
 			}
 			//Take damage as normal and reduce the green health bar.

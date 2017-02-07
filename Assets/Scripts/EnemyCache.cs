@@ -52,14 +52,14 @@ public class EnemyCache : MonoBehaviour {
 	 * Gets a cached enemy and moves the counter so that it's ready to get the next cached enemy.
 	 * 
 	 */
-	public GameObject getEnemy()
+	public GameObject GetEnemy()
 	{
 		currentEnemy++;
 
 		//If the max number of cached enemies is reached, reset the counter.
 		if(currentEnemy == maxNumberOfEnemies - 1)
 		{
-			currentEnemy = -1;
+			currentEnemy = 0;
 		}
 
 		return enemyArray[currentEnemy];

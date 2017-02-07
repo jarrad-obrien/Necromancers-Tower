@@ -59,7 +59,8 @@ public class Cache : MonoBehaviour {
 		//If the max number of cached objects is reached, reset the counter.
 		if (currentObject == maxNumberOfObjects - 1)
 		{
-			currentObject = -1;
+			currentObject = 0;
+			return objectArray[maxNumberOfObjects - 1];
 		}
 
 		return objectArray[currentObject];

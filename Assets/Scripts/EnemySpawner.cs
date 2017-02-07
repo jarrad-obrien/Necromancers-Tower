@@ -66,7 +66,7 @@ public class EnemySpawner : MonoBehaviour {
 	 */
 	void SpawnEnemy()
 	{
-		GameObject enemy = cache.getEnemy();
+		GameObject enemy = cache.GetEnemy();
 
 		//Get the health bar of the enemy.
 		Health enemyHealthInstance = null;
