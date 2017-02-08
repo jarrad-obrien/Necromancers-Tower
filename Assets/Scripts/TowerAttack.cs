@@ -58,8 +58,6 @@ public class TowerAttack : MonoBehaviour {
 	{
 		GameObject projectile = cache.GetCachedObject();
 
-		//Vector2 destination = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
 		Vector3 mouseLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 destination = new Vector2(mouseLocation.x, mouseLocation.y);
 

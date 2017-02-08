@@ -59,6 +59,16 @@ public class Projectile : MonoBehaviour {
 		if (canLaunch)
 		{
 			this.transform.position = Vector2.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
+
+			if(Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), destination) < 0.05f)
+			{
+				this.gameObject.SetActive(false);
+
+				StartingPosition();
+				enemies.Clear();
+				deadEnemies.Clear();
+				aboutToExplode = false;
+			}
 		}
 	}
 
@@ -145,6 +155,7 @@ public class Projectile : MonoBehaviour {
 		StartingPosition();
 		enemies.Clear();
 		deadEnemies.Clear();
+		aboutToExplode = false;
 	}
 
 	/*
