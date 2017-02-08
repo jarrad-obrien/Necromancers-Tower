@@ -35,14 +35,25 @@ public class Projectile : MonoBehaviour {
 	//When the projectile is given a destination, this allows the projectile to fire.
 	private bool canLaunch = false;
 
+	private CircleCollider2D circleCol;
+
+	//How long the projectile lives before being set inactive when it doesn't hit anything.
+	private float projectileLifespan = 4f;
+
+
+	private bool hasOriginBeenSet = false;
+
+	private Vector2 origin;
+
 	void Awake()
 	{
 		StartingPosition();
+		circleCol = GetComponent<CircleCollider2D>();
 	}
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start() {
+		
 	}
 	
 	// Update is called once per frame
@@ -60,15 +71,16 @@ public class Projectile : MonoBehaviour {
 		{
 			this.transform.position = Vector2.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
 
-			if(Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), destination) < 0.05f)
-			{
-				this.gameObject.SetActive(false);
+			StartCoroutine(NothingHit(projectileLifespan));
 
-				StartingPosition();
-				enemies.Clear();
-				deadEnemies.Clear();
-				aboutToExplode = false;
+			if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), destination) < 0.05f)
+			{
+				//KillAndReset();
+
+				destination += destination - origin;
+
 			}
+
 		}
 	}
 
@@ -96,6 +108,7 @@ public class Projectile : MonoBehaviour {
 			if (!aboutToExplode)
 			{
 				aboutToExplode = true;
+				ExpandExplosionRadius();
 				StartCoroutine(ExecuteAfterTime(explosionTimeDelay));
 			}
 		}
@@ -143,19 +156,14 @@ public class Projectile : MonoBehaviour {
 			}
 		}
 
+		//THIS MAY NOT BE NECESSARY
 		//Remove the dead enemies from the live enemy list.
 		foreach (GameObject deadEnemy in deadEnemies)
 		{
 			enemies.Remove(deadEnemy);
 		}
-		deadEnemies.Clear();
 
-		this.gameObject.SetActive(false);
-
-		StartingPosition();
-		enemies.Clear();
-		deadEnemies.Clear();
-		aboutToExplode = false;
+		KillAndReset();
 	}
 
 	/*
@@ -164,7 +172,16 @@ public class Projectile : MonoBehaviour {
 	 */
 	void ExpandExplosionRadius()
 	{
-		GetComponent<CircleCollider2D>().radius *= explosionRadiusMultiplier;
+		circleCol.radius *= explosionRadiusMultiplier;
+	}
+
+	/*
+	 * Reduces the explosion radius to the initial state.
+	 * 
+	 */
+	void ReduceExplosionRadius()
+	{
+		circleCol.radius /= explosionRadiusMultiplier;
 	}
 
 	/*
@@ -173,7 +190,40 @@ public class Projectile : MonoBehaviour {
 	 */
 	void StartingPosition()
 	{
-		this.transform.position = new Vector2(this.transform.parent.transform.position.x, this.transform.parent.transform.position.y);
+		if (!hasOriginBeenSet)
+		{
+			hasOriginBeenSet = true;
+			origin = new Vector2(this.transform.parent.transform.position.x, this.transform.parent.transform.position.y);
+		}
+		this.transform.position = origin;
 	}
 
+	/*
+	 * Sets the projectile as inactive and resets it.
+	 * 
+	 */
+	 void KillAndReset()
+	{
+		this.gameObject.SetActive(false);
+		StartingPosition();
+		ReduceExplosionRadius();
+		enemies.Clear();
+		deadEnemies.Clear();
+		aboutToExplode = false;
+	}
+
+	/*
+	 * Kills the projectile if it has survived too long. This will occur when the projectile 
+	 * hasn't hit anything and it flies offscreen.
+	 * 
+	 */
+	IEnumerator NothingHit(float time)
+	{
+		yield return new WaitForSeconds(time);
+
+		if(this.gameObject.activeSelf != false)
+		{
+			KillAndReset();
+		}
+	}
 }

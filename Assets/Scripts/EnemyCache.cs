@@ -19,7 +19,7 @@ public class EnemyCache : MonoBehaviour {
 	private int maxNumberOfEnemies;
 
 	//Tracks the next enemy to be pulled from the cache.
-	private int currentEnemy = -1;
+	private int currentEnemy = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -57,11 +57,12 @@ public class EnemyCache : MonoBehaviour {
 		currentEnemy++;
 
 		//If the max number of cached enemies is reached, reset the counter.
-		if(currentEnemy == maxNumberOfEnemies - 1)
+		if(currentEnemy == maxNumberOfEnemies)
 		{
 			currentEnemy = 0;
+			return enemyArray[maxNumberOfEnemies - 1];
 		}
 
-		return enemyArray[currentEnemy];
+		return enemyArray[currentEnemy - 1];
 	}
 }

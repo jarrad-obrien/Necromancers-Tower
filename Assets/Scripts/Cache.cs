@@ -19,7 +19,7 @@ public class Cache : MonoBehaviour {
 	private int maxNumberOfObjects;
 
 	//Tracks the next object to be pulled from the cache.
-	private int currentObject = -1;
+	private int currentObject = 0;
 
 	// Use this for initialization
 	void Start()
@@ -57,12 +57,12 @@ public class Cache : MonoBehaviour {
 		currentObject++;
 
 		//If the max number of cached objects is reached, reset the counter.
-		if (currentObject == maxNumberOfObjects - 1)
+		if (currentObject == maxNumberOfObjects)
 		{
 			currentObject = 0;
 			return objectArray[maxNumberOfObjects - 1];
 		}
 
-		return objectArray[currentObject];
+		return objectArray[currentObject - 1]; 
 	}
 }
