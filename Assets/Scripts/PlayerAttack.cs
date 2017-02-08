@@ -10,11 +10,14 @@ using System.Collections.Generic;
  */
 public class PlayerAttack : MonoBehaviour
 {
-	//The list of enemies that are in attack range
+	//The list of enemies that are in attack range.
 	private List<GameObject> enemies = new List<GameObject>();
+
+	//The list of enemies that have died after the player's attack.
 	private List<GameObject> deadEnemies = new List<GameObject>();
 
-	public float damage = 10f;
+	[SerializeField]
+	private float damage = 10f;
 
 	//Time that the player can attack again.
 	private float nextAttackTime = 0.0f;
@@ -40,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		checkIfCanAttack();
+		CheckIfCanAttack();
 	}
 
 	/*
@@ -68,10 +71,10 @@ public class PlayerAttack : MonoBehaviour
 	}
 
 	/*
-	 * Checks the unit is able to attack.
+	 * Checks if the unit is able to attack.
 	 * 
 	 */
-	void checkIfCanAttack()
+	void CheckIfCanAttack()
 	{
 		if (canAttack && Time.time > nextAttackTime && enemies.Count > 0)
 		{

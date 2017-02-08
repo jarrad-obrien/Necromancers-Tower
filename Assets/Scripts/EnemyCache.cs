@@ -14,12 +14,12 @@ public class EnemyCache : MonoBehaviour {
 	private GameObject[] enemyArray;
 
 	//The number of enemies to be instantiated. There should never be more than this number of 
-	//enemies active at one time.
+	//enemies active at any one time.
 	[SerializeField]
 	private int maxNumberOfEnemies;
 
 	//Tracks the next enemy to be pulled from the cache.
-	private int currentEnemy = -1;
+	private int currentEnemy = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -52,16 +52,17 @@ public class EnemyCache : MonoBehaviour {
 	 * Gets a cached enemy and moves the counter so that it's ready to get the next cached enemy.
 	 * 
 	 */
-	public GameObject getEnemy()
+	public GameObject GetEnemy()
 	{
 		currentEnemy++;
 
 		//If the max number of cached enemies is reached, reset the counter.
-		if(currentEnemy == maxNumberOfEnemies - 1)
+		if(currentEnemy == maxNumberOfEnemies)
 		{
-			currentEnemy = -1;
+			currentEnemy = 0;
+			return enemyArray[maxNumberOfEnemies - 1];
 		}
 
-		return enemyArray[currentEnemy];
+		return enemyArray[currentEnemy - 1];
 	}
 }
