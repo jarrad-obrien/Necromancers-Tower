@@ -539,7 +539,7 @@ PlayerSettings:
   XboxOne::VR::enabledDevices: []
   iOS::VR::enabledDevices: []
   tvOS::VR::enabledDevices: []
-  cloudProjectId: e434d641-90cf-490c-8408-095d66693fce
-  projectName: Necromancer's Tower (1)
+  cloudProjectId: f60654ea-abe5-4b77-9ee5-b6acbaa96483
+  projectName: Necromancer's Tower (2)
   organizationId: icer2312
   cloudEnabled: 0
