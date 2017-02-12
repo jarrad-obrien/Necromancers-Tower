@@ -8,8 +8,8 @@ using System.Collections;
 public class SpriterPlayerMovement : MonoBehaviour
 {
 
-	//SpriteRenderer sprRend;
 	BoxCollider2D boxCol2D;
+	Animator anim;
 
 	private bool moveUp = false;
 	private bool moveDown = false;
@@ -28,6 +28,7 @@ public class SpriterPlayerMovement : MonoBehaviour
 	void Awake()
 	{
 		boxCol2D = GetComponent<BoxCollider2D>();
+		anim = GetComponent<Animator>();
 		CreateFacingVectors();
 	}
 
@@ -41,6 +42,7 @@ public class SpriterPlayerMovement : MonoBehaviour
 	void Update()
 	{
 		Movement();
+		AnimationController();
 	}
 
 	void Movement()
@@ -132,11 +134,27 @@ public class SpriterPlayerMovement : MonoBehaviour
 	 * Creates the vector3s required for facing left and right.
 	 * 
 	 */
-	 void CreateFacingVectors()
+	void CreateFacingVectors()
 	{
 		float xScale = this.transform.localScale.x;
 
 		faceLeft = new Vector3(-xScale, this.transform.localScale.y, this.transform.localScale.z);
 		faceRight = new Vector3(xScale, this.transform.localScale.y, this.transform.localScale.z);
+	}
+
+	/*
+	 * Controls the walking animation of the player. 
+	 * 
+	 */
+	void AnimationController()
+	{
+		if(moveDown || moveUp || moveLeft || moveRight)
+		{
+			anim.SetBool("IsWalking", true);
+		}
+		else
+		{
+			anim.SetBool("IsWalking", false);
+		}
 	}
 }
