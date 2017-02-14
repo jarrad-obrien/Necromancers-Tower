@@ -96,7 +96,10 @@ public class SpriterPlayerMovement : MonoBehaviour
 
 		if (moveUp)
 		{
-			this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + moveSpeed * Time.deltaTime, this.transform.localPosition.z);
+			if (this.transform.localPosition.y <= 2)
+			{
+				this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + moveSpeed * Time.deltaTime, this.transform.localPosition.z);
+			}
 		}
 
 		if (moveLeft)
