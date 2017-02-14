@@ -8,7 +8,7 @@ using System.Collections;
 public class SpriterPlayerMovement : MonoBehaviour
 {
 
-	BoxCollider2D boxCol2D;
+	//BoxCollider2D boxCol2D;
 	Animator anim;
 
 	private bool moveUp = false;
@@ -20,14 +20,14 @@ public class SpriterPlayerMovement : MonoBehaviour
 	private Vector3 faceLeft;
 	private Vector3 faceRight;
 
-	private bool facingRight = true;
+	//private bool facingRight = true;
 
 	[SerializeField]
 	private float moveSpeed;
 
 	void Awake()
 	{
-		boxCol2D = GetComponent<BoxCollider2D>();
+		//boxCol2D = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 		CreateFacingVectors();
 	}

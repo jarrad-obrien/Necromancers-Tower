@@ -10,6 +10,8 @@ using System.Collections;
 [RequireComponent(typeof(EnemyFollow))]
 public class EnemyAttack : MonoBehaviour {
 
+	Animator anim;
+
 	//The health of the target.
 	Health targetHealth;
 
@@ -34,6 +36,14 @@ public class EnemyAttack : MonoBehaviour {
 	//multiple times while the if statement that calls the method is true.
 	private bool canAttack = true;
 
+	//This allows only one attack animation to occur at any given time.
+	private bool canAnimate = true;
+
+	void Awake()
+	{
+		anim = GetComponent<Animator>();
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -44,6 +54,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Update ()
 	{
 		CheckIfCanAttack();
+		SetIdleAnimation();
 	}
 
 	/*
@@ -85,6 +96,7 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	IEnumerator ExecuteAfterTime(float time)
 	{
+		AnimationAttack();
 		yield return new WaitForSeconds(time);
 		Attack();
 	}
@@ -109,5 +121,33 @@ public class EnemyAttack : MonoBehaviour {
 	public void SetCanAttack()
 	{
 		atTower = true;
+	}
+
+	/*
+	 * Sets the unit into an idle state when it reaches the tower.
+	 * 
+	 */
+	void SetIdleAnimation()
+	{
+		if (atTower)
+		{
+			anim.SetBool("IsAtTower", true);
+		}
+	}
+
+	/*
+	 * Plays an attack animation.
+	 * 
+	 */
+	void AnimationAttack()
+	{
+		if (Random.Range(0, 2) == 0)
+		{
+			anim.Play("sword_swing_0");
+		}
+		else
+		{
+			anim.Play("Sword_thrust");
+		}
 	}
 }

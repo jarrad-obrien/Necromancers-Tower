@@ -44,7 +44,6 @@ public class EnemyCache : MonoBehaviour {
 			enemyArray[i] = (GameObject)Instantiate(enemyPrefab, this.transform);
 			enemyArray[i].SetActive(false);
 		}
-
 		GetComponent<EnemySpawner>().BeginSpawning();
 	}
 

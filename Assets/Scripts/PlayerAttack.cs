@@ -156,6 +156,11 @@ public class PlayerAttack : MonoBehaviour
 		canAttack = true;
 	}
 
+
+	/*
+	 * Plays an animation if the unit attacks.
+	 * 
+	 */
 	void AnimationController()
 	{
 		if(!canAttack)
