@@ -10,6 +10,8 @@ using System.Collections.Generic;
  */
 public class PlayerAttack : MonoBehaviour
 {
+	Animator anim;
+
 	//The list of enemies that are in attack range.
 	private List<GameObject> enemies = new List<GameObject>();
 
@@ -34,6 +36,11 @@ public class PlayerAttack : MonoBehaviour
 	//times while the if statement that calls the method is true.
 	private bool canAttack = true;
 
+	void Awake()
+	{
+		anim = GetComponent<Animator>();
+	}
+
 	// Use this for initialization
 	void Start()
 	{
@@ -44,6 +51,7 @@ public class PlayerAttack : MonoBehaviour
 	void Update()
 	{
 		CheckIfCanAttack();
+		AnimationController();
 	}
 
 	/*
@@ -146,5 +154,18 @@ public class PlayerAttack : MonoBehaviour
 	{
 		nextAttackTime = Time.time + attackDelay;
 		canAttack = true;
+	}
+
+
+	/*
+	 * Plays an animation if the unit attacks.
+	 * 
+	 */
+	void AnimationController()
+	{
+		if(!canAttack)
+		{
+			anim.Play("attack_0");
+		}
 	}
 }
