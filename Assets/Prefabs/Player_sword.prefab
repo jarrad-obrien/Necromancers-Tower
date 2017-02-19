@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000014240477010}
-  - 114: {fileID: 114000013863362546}
+  - 114: {fileID: 114000012740306970}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -2263,6 +2263,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 995d5c328a369f34fa9c9829a8da733f, type: 3}
   - {fileID: 21300000, guid: fe10cc22f76275b4ea1cdf78c99c7d85, type: 3}
   - {fileID: 21300000, guid: 18711ba34c2a0544a8aa49b38c984e0b, type: 3}
+--- !u!114 &114000012740306970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010549681558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df095c640eba5ea40a5192e48ba74908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 30
 --- !u!114 &114000012789651478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2427,18 +2439,6 @@ MonoBehaviour:
   Sprites:
   - {fileID: 21300000, guid: 0e2d8fecf6e65a348ac9412a58bf2ea7, type: 3}
   - {fileID: 21300000, guid: 2ce415b8b3ffb5d4a8526313ad9edeed, type: 3}
---- !u!114 &114000013863362546
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010549681558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965e12a3395ffe44f8dc4c7bacad7b34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 30
 --- !u!114 &114000013889511716
 MonoBehaviour:
   m_ObjectHideFlags: 1

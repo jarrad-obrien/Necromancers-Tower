@@ -135,12 +135,12 @@ public class Projectile : MonoBehaviour {
 		foreach (GameObject enemy in enemies)
 		{
 			//Get the health bar of the enemy.
-			Health enemyHealthInstance = null;
+			EnemyHealth enemyHealthInstance = null;
 			for (int i = 0; i < enemy.transform.childCount; i++)
 			{
 				if (enemy.transform.GetChild(i).transform.name == "HealthBar")
 				{
-					enemyHealthInstance = enemy.transform.GetChild(i).GetComponent<Health>();
+					enemyHealthInstance = enemy.transform.GetChild(i).GetComponent<EnemyHealth>();
 					break;
 				}
 			}

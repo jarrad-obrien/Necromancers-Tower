@@ -11,6 +11,7 @@ using System.Collections;
 public class EnemyAttack : MonoBehaviour {
 
 	Animator anim;
+	EnemyHealth enemyHealth;
 
 	//The health of the target.
 	Health targetHealth;
@@ -36,12 +37,10 @@ public class EnemyAttack : MonoBehaviour {
 	//multiple times while the if statement that calls the method is true.
 	private bool canAttack = true;
 
-	//This allows only one attack animation to occur at any given time.
-	private bool canAnimate = true;
-
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
+		GetThisHealth();
 	}
 
 	// Use this for initialization
@@ -55,6 +54,7 @@ public class EnemyAttack : MonoBehaviour {
 	{
 		CheckIfCanAttack();
 		SetIdleAnimation();
+		DeathAnimation();
 	}
 
 	/*
@@ -72,6 +72,21 @@ public class EnemyAttack : MonoBehaviour {
 			{
 				targetHealth = target.transform.GetChild(i).GetComponent<Health>();
 				break;
+			}
+		}
+	}
+
+	/*
+	 * Get the health of this unit.
+	 * 
+	 */
+	void GetThisHealth()
+	{
+		for(int i = 0; i < this.transform.childCount; i++)
+		{
+			if(this.transform.GetChild(i).transform.name == "HealthBar")
+			{
+				enemyHealth = this.transform.GetChild(i).GetComponent<EnemyHealth>();
 			}
 		}
 	}
@@ -133,6 +148,10 @@ public class EnemyAttack : MonoBehaviour {
 		{
 			anim.SetBool("IsAtTower", true);
 		}
+		else
+		{
+			anim.SetBool("IsAtTower", false);
+		}
 	}
 
 	/*
@@ -148,6 +167,14 @@ public class EnemyAttack : MonoBehaviour {
 		else
 		{
 			anim.Play("Sword_thrust");
+		}
+	}
+
+	public void DeathAnimation()
+	{
+		if(enemyHealth.CheckIfDead())
+		{
+			atTower = false;
 		}
 	}
 }

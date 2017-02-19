@@ -20,6 +20,8 @@ public class SpriterPlayerMovement : MonoBehaviour
 	private Vector3 faceLeft;
 	private Vector3 faceRight;
 
+	private float topBoundary = 2;
+
 	//private bool facingRight = true;
 
 	[SerializeField]
@@ -96,7 +98,7 @@ public class SpriterPlayerMovement : MonoBehaviour
 
 		if (moveUp)
 		{
-			if (this.transform.localPosition.y <= 2)
+			if (this.transform.localPosition.y <= topBoundary)
 			{
 				this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + moveSpeed * Time.deltaTime, this.transform.localPosition.z);
 			}
