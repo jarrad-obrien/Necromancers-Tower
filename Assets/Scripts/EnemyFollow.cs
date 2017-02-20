@@ -18,6 +18,7 @@ public class EnemyFollow : MonoBehaviour {
 
 	[SerializeField]
 	private float moveSpeed;
+	private float savedMoveSpeed;
 
 	//Distance at which this unit can start attacking its target.
 	[SerializeField]
@@ -32,6 +33,8 @@ public class EnemyFollow : MonoBehaviour {
 		realTarget = GameObject.Find("LowerTarget");
 
 		enemyAttackInstance = this.GetComponent<EnemyAttack>();
+
+		savedMoveSpeed = moveSpeed;
 	}
 
 	// Use this for initialization
@@ -73,5 +76,23 @@ public class EnemyFollow : MonoBehaviour {
 	public GameObject GetTarget()
 	{
 		return target;
+	}
+
+	/*
+	 * Stops this enemy from moving.
+	 * 
+	 */
+	public void StopMoving()
+	{
+		moveSpeed = 0f;
+	}
+
+	/*
+	 * Gives this enemy a move speed so it can approach its target.
+	 * 
+	 */
+	public void StartMoving()
+	{
+		moveSpeed = savedMoveSpeed;
 	}
 }

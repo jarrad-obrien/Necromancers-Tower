@@ -37,6 +37,9 @@ public class EnemyAttack : MonoBehaviour {
 	//multiple times while the if statement that calls the method is true.
 	private bool canAttack = true;
 
+	//Keeps track of whether or not the unit is alive. This is used to control the animations.
+	private bool hasDied = false;
+
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
@@ -97,9 +100,10 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	void CheckIfCanAttack()
 	{
-		if (atTower && canAttack && Time.time > nextAttackTime)
+		if (atTower && canAttack && Time.time > nextAttackTime && !enemyHealth.CheckIfDead())
 		{
 			canAttack = false;
+			nextAttackTime = Time.time + attackDelay + attackAnimDuration;
 			StartCoroutine(ExecuteAfterTime(attackAnimDuration));
 		}
 	}
@@ -124,7 +128,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Attack()
 	{
 		targetHealth.TakeDamage(damage);
-		nextAttackTime = Time.time + attackDelay;
+		
 		canAttack = true;
 	}
 
@@ -144,13 +148,9 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	void SetIdleAnimation()
 	{
-		if (atTower)
+		if (atTower && !enemyHealth.CheckIfDead())
 		{
 			anim.SetBool("IsAtTower", true);
-		}
-		else
-		{
-			anim.SetBool("IsAtTower", false);
 		}
 	}
 
@@ -170,11 +170,34 @@ public class EnemyAttack : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Plays the death animation.
+	 * 
+	 */
 	public void DeathAnimation()
 	{
-		if(enemyHealth.CheckIfDead())
+		if(enemyHealth.CheckIfDead() && !hasDied)
 		{
-			atTower = false;
+			hasDied = true;
+			anim.Play("falling_to_back");
 		}
+	}
+
+	/*
+	 * Sets the hasDied bool.
+	 * 
+	 */
+	 public void SetIsDead(bool exp)
+	{
+		hasDied = exp;
+	}
+
+	/*
+	 * Sets the atTower bool.
+	 * 
+	 */
+	 public void SetAtTower(bool exp)
+	{
+		atTower = exp;
 	}
 }

@@ -88,6 +88,9 @@ public class EnemySpawner : MonoBehaviour {
 		//Sets the enemy active so it will approach the target.
 		enemy.SetActive(true);
 
+		//Sets the enemy's animation as walking.
+		enemyHealthInstance.ResetAnimator();
+
 		UpdateNextSpawn();
 	}
 

@@ -11,6 +11,10 @@ public class EnemyHealth : MonoBehaviour
 	[SerializeField]
 	private float health;
 
+	private EnemyAttack enemyAttackInstance;
+	private EnemyFollow enemyFollowInstance;
+	private Animator anim;
+
 	//The scale of the green health bar.
 	private float initialXScale;
 
@@ -18,10 +22,16 @@ public class EnemyHealth : MonoBehaviour
 	private float totalDamageTaken = 0f;
 	private bool isDead = false;
 
+	//How long the enemy stays dead on the ground before becoming inactivated.
+	private float deathTimeDelay = 2f;
+
 	void Awake()
 	{
 		healthBarGreen = this.transform.FindChild("HealthBarGreen").gameObject;
 		initialXScale = healthBarGreen.transform.localScale.x;
+		enemyAttackInstance = this.transform.parent.GetComponent<EnemyAttack>();
+		enemyFollowInstance = this.transform.parent.GetComponent<EnemyFollow>();
+		anim = this.transform.parent.GetComponent<Animator>();
 	}
 
 	// Use this for initialization
@@ -35,11 +45,11 @@ public class EnemyHealth : MonoBehaviour
 	{
 		if (isDead)
 		{
-			//TODO: make a death anim?
-			Transform parent = this.transform.parent;
+			enemyAttackInstance.DeathAnimation();
+			enemyFollowInstance.StopMoving();
 
-			parent.GetComponent<EnemyAttack>().DeathAnimation();
-			parent.gameObject.SetActive(false);
+			StartCoroutine(ExecuteAfterTime(deathTimeDelay));
+			
 		}
 	}
 
@@ -86,5 +96,32 @@ public class EnemyHealth : MonoBehaviour
 		isDead = false;
 		totalDamageTaken = 0;
 		healthBarGreen.transform.localScale = new Vector3(initialXScale, healthBarGreen.transform.localScale.y, healthBarGreen.transform.localScale.z);
+		enemyAttackInstance.SetIsDead(false);
+		enemyAttackInstance.SetAtTower(false);
+		enemyFollowInstance.StartMoving();
+	}
+
+	/*
+	 * Sets the enemy's animation as walking.
+	 * 
+	 */
+	 public void ResetAnimator()
+	{
+		anim.SetBool("IsAtTower", false);
+	}
+
+	/*
+	 * Timer to delay when the enemy becomes inactivated.
+	 * 
+	 */
+	IEnumerator ExecuteAfterTime(float time)
+	{
+		yield return new WaitForSeconds(time);
+		OnDeath();
+	}
+
+	void OnDeath()
+	{
+		this.transform.parent.gameObject.SetActive(false);
 	}
 }
