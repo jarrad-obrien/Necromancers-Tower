@@ -394,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1000010038867820, guid: a6b3a72ba03ec114094848dc401922d5,
     type: 2}
-  maxNumberOfEnemies: 1
+  maxNumberOfEnemies: 20
 --- !u!4 &819759934
 Transform:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   xPos: -7.5
   yPosTop: 2
   yPosBottom: -5.5
-  timeBetweenSpawns: 10
+  timeBetweenSpawns: 2.5
   roundDuration: 0
 --- !u!4 &904721440 stripped
 Transform:

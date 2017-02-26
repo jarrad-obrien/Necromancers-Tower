@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 /*
  * Works with the HealthBar sprites to manage a health bar.
@@ -25,6 +26,7 @@ public class EnemyHealth : MonoBehaviour
 
 	//How long the enemy stays dead on the ground before becoming inactivated.
 	private float deathTimeDelay = 2f;
+	private float hitTimeDelay = .4f;
 
 	void Awake()
 	{
@@ -59,7 +61,7 @@ public class EnemyHealth : MonoBehaviour
 			enemyAttackInstance.DeathAnimation();
 			enemyFollowInstance.StopMoving();
 
-			StartCoroutine(ExecuteAfterTime(deathTimeDelay));
+			StartCoroutine(ExecuteAfterTime(deathTimeDelay, OnDeath));
 
 		}
 	}
@@ -77,7 +79,7 @@ public class EnemyHealth : MonoBehaviour
 		//If the unit is still alive.
 		if (!isDead)
 		{
-			anim.Play("block_hit");
+			HitAnimation();
 
 			//If the total damage taken is greater than its health, the unit is marked as dead and
 			//the green health bar is effectively removed.
@@ -92,6 +94,14 @@ public class EnemyHealth : MonoBehaviour
 				healthBarGreen.transform.localScale -= new Vector3(1 - ((health - damage) / health * initialXScale), 0, 0);
 			}
 		}
+	}
+
+	void HitAnimation()
+	{
+		anim.Play("block_hit");
+		enemyFollowInstance.StopMoving();
+		StartCoroutine(ExecuteAfterTime(hitTimeDelay, enemyFollowInstance.StartAccelerating));
+		
 	}
 
 	//Checks if the unit is alive or not.
@@ -129,10 +139,10 @@ public class EnemyHealth : MonoBehaviour
 	 * Timer to delay when the enemy becomes inactivated.
 	 * 
 	 */
-	IEnumerator ExecuteAfterTime(float time)
+	IEnumerator ExecuteAfterTime(float time, Action action)
 	{
 		yield return new WaitForSeconds(time);
-		OnDeath();
+		action();
 	}
 
 	/*

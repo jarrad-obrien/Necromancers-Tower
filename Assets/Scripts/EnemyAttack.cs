@@ -11,7 +11,7 @@ using System.Collections;
 public class EnemyAttack : MonoBehaviour {
 
 	Animator anim;
-	EnemyHealth enemyHealth;
+	EnemyHealth enemyHealthInstance;
 	BoxCollider2D boxCol2D;
 
 	//The health of the target.
@@ -91,7 +91,7 @@ public class EnemyAttack : MonoBehaviour {
 		{
 			if(this.transform.GetChild(i).transform.name == "HealthBar")
 			{
-				enemyHealth = this.transform.GetChild(i).GetComponent<EnemyHealth>();
+				enemyHealthInstance = this.transform.GetChild(i).GetComponent<EnemyHealth>();
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	void CheckIfCanAttack()
 	{
-		if (atTower && canAttack && Time.time > nextAttackTime && !enemyHealth.CheckIfDead())
+		if (atTower && canAttack && Time.time > nextAttackTime && !enemyHealthInstance.CheckIfDead())
 		{
 			canAttack = false;
 			nextAttackTime = Time.time + attackDelay + attackAnimDuration;
@@ -150,7 +150,7 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	void SetIdleAnimation()
 	{
-		if (atTower && !enemyHealth.CheckIfDead())
+		if (atTower && !enemyHealthInstance.CheckIfDead())
 		{
 			anim.SetBool("IsAtTower", true);
 		}
@@ -178,7 +178,7 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	public void DeathAnimation()
 	{
-		if(enemyHealth.CheckIfDead() && !hasDied)
+		if(enemyHealthInstance.CheckIfDead() && !hasDied)
 		{
 			hasDied = true;
 			anim.Play("hit_0");

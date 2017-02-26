@@ -5,7 +5,8 @@ using System.Collections;
  * Makes a GameObject approach a target until it reaches a minimum distance.
  * 
  */
-public class EnemyFollow : MonoBehaviour {
+public class EnemyFollow : MonoBehaviour
+{
 
 	//The root of the target.
 	GameObject target;
@@ -15,14 +16,19 @@ public class EnemyFollow : MonoBehaviour {
 	GameObject realTarget;
 
 	EnemyAttack enemyAttackInstance;
+	EnemyHealth enemyHealthInstance;
 
 	[SerializeField]
 	private float moveSpeed;
 	private float savedMoveSpeed;
+	[SerializeField]
+	private float acceleration;
 
 	//Distance at which this unit can start attacking its target.
 	[SerializeField]
 	private float minDistance;
+
+	private bool canAccelerate = false;
 
 	void Awake()
 	{
@@ -35,18 +41,21 @@ public class EnemyFollow : MonoBehaviour {
 		enemyAttackInstance = this.GetComponent<EnemyAttack>();
 
 		savedMoveSpeed = moveSpeed;
+
+		GetThisHealth();
 	}
 
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
-	
+
 	}
-	
+
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
-		Follow();		
+		Follow();
+		SpeedUp();
 	}
 
 	/*
@@ -66,6 +75,18 @@ public class EnemyFollow : MonoBehaviour {
 			{
 				enemyAttackInstance.SetCanAttack();
 			}
+		}
+	}
+
+	void SpeedUp()
+	{
+		if(canAccelerate && moveSpeed < savedMoveSpeed && !enemyHealthInstance.CheckIfDead())
+		{
+			moveSpeed += acceleration;
+		}
+		else
+		{
+			canAccelerate = false;
 		}
 	}
 
@@ -95,4 +116,30 @@ public class EnemyFollow : MonoBehaviour {
 	{
 		moveSpeed = savedMoveSpeed;
 	}
+
+	/*
+	 * Get the health of this unit.
+	 * 
+	 */
+	void GetThisHealth()
+	{
+		for (int i = 0; i < this.transform.childCount; i++)
+		{
+			if (this.transform.GetChild(i).transform.name == "HealthBar")
+			{
+				enemyHealthInstance = this.transform.GetChild(i).GetComponent<EnemyHealth>();
+			}
+
+		}
+	}
+
+	/*
+	 * Starts the enemy accelerating after stopping.
+	 * 
+	 */
+	public void StartAccelerating()
+	{
+		canAccelerate = true;
+	}
+
 }
