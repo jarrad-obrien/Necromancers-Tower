@@ -77,6 +77,8 @@ public class EnemyHealth : MonoBehaviour
 		//If the unit is still alive.
 		if (!isDead)
 		{
+			anim.Play("block_hit");
+
 			//If the total damage taken is greater than its health, the unit is marked as dead and
 			//the green health bar is effectively removed.
 			if (totalDamageTaken >= health)

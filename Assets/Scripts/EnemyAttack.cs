@@ -181,7 +181,7 @@ public class EnemyAttack : MonoBehaviour {
 		if(enemyHealth.CheckIfDead() && !hasDied)
 		{
 			hasDied = true;
-			anim.Play("falling_to_back");
+			anim.Play("hit_0");
 
 			boxCol2D.enabled = false;
 		}
