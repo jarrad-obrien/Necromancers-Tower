@@ -12,6 +12,7 @@ public class EnemyAttack : MonoBehaviour {
 
 	Animator anim;
 	EnemyHealth enemyHealth;
+	BoxCollider2D boxCol2D;
 
 	//The health of the target.
 	Health targetHealth;
@@ -44,6 +45,7 @@ public class EnemyAttack : MonoBehaviour {
 	{
 		anim = GetComponent<Animator>();
 		GetThisHealth();
+		boxCol2D = GetComponent<BoxCollider2D>();
 	}
 
 	// Use this for initialization
@@ -180,6 +182,8 @@ public class EnemyAttack : MonoBehaviour {
 		{
 			hasDied = true;
 			anim.Play("falling_to_back");
+
+			boxCol2D.enabled = false;
 		}
 	}
 

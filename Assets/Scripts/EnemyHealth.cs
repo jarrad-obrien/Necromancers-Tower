@@ -14,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
 	private EnemyAttack enemyAttackInstance;
 	private EnemyFollow enemyFollowInstance;
 	private Animator anim;
+	private BoxCollider2D boxCol2D;
 
 	//The scale of the green health bar.
 	private float initialXScale;
@@ -32,6 +33,7 @@ public class EnemyHealth : MonoBehaviour
 		enemyAttackInstance = this.transform.parent.GetComponent<EnemyAttack>();
 		enemyFollowInstance = this.transform.parent.GetComponent<EnemyFollow>();
 		anim = this.transform.parent.GetComponent<Animator>();
+		boxCol2D = this.transform.parent.GetComponent<BoxCollider2D>();
 	}
 
 	// Use this for initialization
@@ -43,13 +45,22 @@ public class EnemyHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		HasDied();
+	}
+	
+	/*
+	 * Checks if the enemy is dead. If it is, execute the methods relating to its death. 
+	 * 
+	 */
+	 void HasDied()
+	{
 		if (isDead)
 		{
 			enemyAttackInstance.DeathAnimation();
 			enemyFollowInstance.StopMoving();
 
 			StartCoroutine(ExecuteAfterTime(deathTimeDelay));
-			
+
 		}
 	}
 
@@ -99,6 +110,8 @@ public class EnemyHealth : MonoBehaviour
 		enemyAttackInstance.SetIsDead(false);
 		enemyAttackInstance.SetAtTower(false);
 		enemyFollowInstance.StartMoving();
+		boxCol2D.enabled = true;
+
 	}
 
 	/*
@@ -120,6 +133,10 @@ public class EnemyHealth : MonoBehaviour
 		OnDeath();
 	}
 
+	/*
+	 * Sets this enemy to inactive when it dies.
+	 * 
+	 */
 	void OnDeath()
 	{
 		this.transform.parent.gameObject.SetActive(false);
