@@ -69,12 +69,12 @@ public class EnemySpawner : MonoBehaviour {
 		GameObject enemy = cache.GetEnemy();
 
 		//Get the health bar of the enemy.
-		Health enemyHealthInstance = null;
+		EnemyHealth enemyHealthInstance = null;
 		for (int i = 0; i < enemy.transform.childCount; i++)
 		{
 			if (enemy.transform.GetChild(i).transform.name == "HealthBar")
 			{
-				enemyHealthInstance = enemy.transform.GetChild(i).GetComponent<Health>();
+				enemyHealthInstance = enemy.transform.GetChild(i).GetComponent<EnemyHealth>();
 				break;
 			}
 		}
@@ -87,6 +87,9 @@ public class EnemySpawner : MonoBehaviour {
 
 		//Sets the enemy active so it will approach the target.
 		enemy.SetActive(true);
+
+		//Sets the enemy's animation as walking.
+		enemyHealthInstance.ResetAnimator();
 
 		UpdateNextSpawn();
 	}

@@ -422,7 +422,7 @@ MonoBehaviour:
   xPos: -7.5
   yPosTop: 2
   yPosBottom: -5.5
-  timeBetweenSpawns: 2
+  timeBetweenSpawns: 2.5
   roundDuration: 0
 --- !u!4 &904721440 stripped
 Transform:

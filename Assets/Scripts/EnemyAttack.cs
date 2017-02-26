@@ -11,6 +11,8 @@ using System.Collections;
 public class EnemyAttack : MonoBehaviour {
 
 	Animator anim;
+	EnemyHealth enemyHealthInstance;
+	BoxCollider2D boxCol2D;
 
 	//The health of the target.
 	Health targetHealth;
@@ -36,12 +38,14 @@ public class EnemyAttack : MonoBehaviour {
 	//multiple times while the if statement that calls the method is true.
 	private bool canAttack = true;
 
-	//This allows only one attack animation to occur at any given time.
-	private bool canAnimate = true;
+	//Keeps track of whether or not the unit is alive. This is used to control the animations.
+	private bool hasDied = false;
 
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
+		GetThisHealth();
+		boxCol2D = GetComponent<BoxCollider2D>();
 	}
 
 	// Use this for initialization
@@ -55,6 +59,7 @@ public class EnemyAttack : MonoBehaviour {
 	{
 		CheckIfCanAttack();
 		SetIdleAnimation();
+		DeathAnimation();
 	}
 
 	/*
@@ -77,14 +82,30 @@ public class EnemyAttack : MonoBehaviour {
 	}
 
 	/*
+	 * Get the health of this unit.
+	 * 
+	 */
+	void GetThisHealth()
+	{
+		for(int i = 0; i < this.transform.childCount; i++)
+		{
+			if(this.transform.GetChild(i).transform.name == "HealthBar")
+			{
+				enemyHealthInstance = this.transform.GetChild(i).GetComponent<EnemyHealth>();
+			}
+		}
+	}
+
+	/*
 	 * Checks if the unit is able to attack.
 	 * 
 	 */
 	void CheckIfCanAttack()
 	{
-		if (atTower && canAttack && Time.time > nextAttackTime)
+		if (atTower && canAttack && Time.time > nextAttackTime && !enemyHealthInstance.CheckIfDead())
 		{
 			canAttack = false;
+			nextAttackTime = Time.time + attackDelay + attackAnimDuration;
 			StartCoroutine(ExecuteAfterTime(attackAnimDuration));
 		}
 	}
@@ -109,7 +130,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Attack()
 	{
 		targetHealth.TakeDamage(damage);
-		nextAttackTime = Time.time + attackDelay;
+		
 		canAttack = true;
 	}
 
@@ -129,7 +150,7 @@ public class EnemyAttack : MonoBehaviour {
 	 */
 	void SetIdleAnimation()
 	{
-		if (atTower)
+		if (atTower && !enemyHealthInstance.CheckIfDead())
 		{
 			anim.SetBool("IsAtTower", true);
 		}
@@ -149,5 +170,38 @@ public class EnemyAttack : MonoBehaviour {
 		{
 			anim.Play("Sword_thrust");
 		}
+	}
+
+	/*
+	 * Plays the death animation.
+	 * 
+	 */
+	public void DeathAnimation()
+	{
+		if(enemyHealthInstance.CheckIfDead() && !hasDied)
+		{
+			hasDied = true;
+			anim.Play("hit_0");
+
+			boxCol2D.enabled = false;
+		}
+	}
+
+	/*
+	 * Sets the hasDied bool.
+	 * 
+	 */
+	 public void SetIsDead(bool exp)
+	{
+		hasDied = exp;
+	}
+
+	/*
+	 * Sets the atTower bool.
+	 * 
+	 */
+	 public void SetAtTower(bool exp)
+	{
+		atTower = exp;
 	}
 }
